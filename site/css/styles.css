@@ -187,6 +187,10 @@ h2 { font: 600 clamp(1.75rem, 3.6vw, 2.75rem)/1.12 var(--sans); letter-spacing: 
 @media (max-width: 600px) { .form-embed iframe { height: 2080px; } }
 @media (max-width: 370px) { .form-embed iframe { height: 2120px; } }
 @media (max-width: 340px) { .form-embed iframe { height: 2230px; } }
+/* After submitting, Google shows a short confirmation; shrink the frame so there's no empty white space.
+   If the confirmation is ever taller, the frame scrolls rather than cutting it off. */
+.form-embed.submitted iframe { height: 560px; }
+.form-embed.submitted .form-fallback { display: none; }
 .form-fallback { margin: 0; padding: 12px 20px 16px; font-size: .85rem; color: #5f6368; text-align: center; border-top: 1px solid #e8eaed; }
 .form-fallback a { color: var(--accent); }
 

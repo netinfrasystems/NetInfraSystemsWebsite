@@ -70,5 +70,24 @@
     });
   }
 
+  // Google Form: the form is cross-origin, so we can't see inside it, but the frame fires "load" each
+  // time Google shows a new page. After someone has used the form, a load means they submitted (or hit
+  // "Submit another response"): bring the card into view and size the frame for the short confirmation.
+  var formCard = $("#consultation-form");
+  var formFrame = formCard && $("iframe", formCard);
+  if (formFrame) {
+    var usedForm = false, userLoads = 0;
+    // Clicking into a cross-origin frame blurs this window and makes the frame the active element.
+    window.addEventListener("blur", function () {
+      setTimeout(function () { if (document.activeElement === formFrame) usedForm = true; }, 0);
+    });
+    formFrame.addEventListener("load", function () {
+      if (!usedForm) return; // initial load, or Google's own redirects before anyone touched the form
+      userLoads++;
+      formCard.classList.toggle("submitted", userLoads % 2 === 1); // confirmation, then form again, ...
+      formCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
   var y = $("#year"); if (y) y.textContent = new Date().getFullYear();
 })();
