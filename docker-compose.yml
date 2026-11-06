@@ -1,15 +1,25 @@
+name: netinfrasystems
 services:
-  web:
-    build: .
-    image: netinfrasystems-site:latest
-    container_name: netinfrasystems-site
+  netinfrasystems:
+    image: ghcr.io/amurikurthy/netinfrasystemswebsite:latest
+    container_name: netinfrasystems
     restart: unless-stopped
-    ports:
-      - "8080:80"
     environment:
-      # Optional: link to an online scheduler (Calendly, Cal.com, Google appointment page...)
-      BOOKING_URL: ""
-      # Optional: shown on the page and used by the form as a mailto: fallback
-      CONTACT_EMAIL: ""
-      # Optional: a form service URL that accepts JSON POSTs (e.g. Formspree, Basin, your own API)
-      FORM_ENDPOINT: ""
+      - CONTACT_EMAIL=                # shown on the page; form falls back to mailto: here
+      - BOOKING_URL=                  # optional: Calendly / Cal.com link for "Pick a time"
+      - FORM_ENDPOINT=                # optional: Formspree-style JSON endpoint for the form
+
+  netinfrasystems-newt:
+    image: fosrl/newt
+    container_name: netinfrasystems-newt
+    restart: always
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.borderleaf.com
+      - NEWT_ID=
+      - NEWT_SECRET=
+    extra_hosts:
+      - "docker-host:host-gateway"
+
+networks:
+  default:
+    name: netinfrasystems
