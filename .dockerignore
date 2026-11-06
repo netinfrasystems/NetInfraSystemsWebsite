@@ -1,6 +1,5 @@
-*.md
 .git
 .github/
-docker-compose.yml
 docs/
-preview-*.png
+*.md
+docker-compose.yml

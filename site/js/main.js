@@ -1,6 +1,5 @@
 (function () {
   "use strict";
-  var cfg = window.SITE_CONFIG || {};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -70,75 +69,6 @@
       if (e.key === "ArrowRight") show(idx + 1);
     });
   }
-
-  // Package buttons pre-select the form
-  var pkgSelect = $("#package-select");
-  $$("[data-package]").forEach(function (a) {
-    a.addEventListener("click", function () { pkgSelect.value = a.getAttribute("data-package"); });
-  });
-
-  // Contact options from runtime config (see docker/entrypoint)
-  if (cfg.bookingUrl) {
-    var bl = $("#booking-link");
-    bl.href = cfg.bookingUrl;
-    bl.hidden = false;
-  }
-  if (cfg.contactEmail) {
-    var el = $("#contact-email-link");
-    el.href = "mailto:" + cfg.contactEmail;
-    el.textContent = cfg.contactEmail;
-    $("#contact-direct").hidden = false;
-  }
-
-  // Contact form
-  var form = $("#contact-form"), note = $("#form-note");
-  var setNote = function (msg, kind) { note.textContent = msg; note.className = "form-note" + (kind ? " " + kind : ""); };
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var bad = null;
-    $$("[required]", form).forEach(function (f) {
-      var ok = f.value.trim() !== "" && (f.type !== "email" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));
-      f.setAttribute("aria-invalid", ok ? "false" : "true");
-      if (!ok && !bad) bad = f;
-    });
-    if (bad) { setNote("Please add your name and a valid email.", "err"); bad.focus(); return; }
-
-    var data = {};
-    new FormData(form).forEach(function (v, k) { data[k] = String(v).trim(); });
-    var btn = $("button[type=submit]", form);
-
-    if (cfg.formEndpoint) {
-      btn.disabled = true; setNote("Sending...");
-      fetch(cfg.formEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(data)
-      }).then(function (r) {
-        if (!r.ok) throw new Error(r.status);
-        form.reset();
-        setNote("Thanks! We got your request and will be in touch shortly.", "ok");
-      }).catch(function () {
-        setNote("Something went wrong sending your request." + (cfg.contactEmail ? " Please email " + cfg.contactEmail + "." : ""), "err");
-      }).then(function () { btn.disabled = false; });
-      return;
-    }
-
-    if (cfg.contactEmail) {
-      var lines = [
-        "Name: " + data.name, "Email: " + data.email,
-        "Organization: " + (data.organization || "-"), "Phone: " + (data.phone || "-"),
-        "Event date: " + (data.date || "-"), "Package: " + (data["package"] || "Not sure yet"),
-        "Event / location: " + (data.event || "-"), "", data.message || ""
-      ];
-      window.location.href = "mailto:" + cfg.contactEmail +
-        "?subject=" + encodeURIComponent("Consultation request: " + (data.event || data.name)) +
-        "&body=" + encodeURIComponent(lines.join("\n"));
-      setNote("Opening your email app to send the request...", "ok");
-      return;
-    }
-
-    setNote("Online requests aren't set up yet. Please check back soon.", "err");
-  });
 
   var y = $("#year"); if (y) y.textContent = new Date().getFullYear();
 })();

@@ -244,7 +244,7 @@
               <li>Streaming</li>
               <li>Room or soundboard audio</li>
             </ul>
-            <a class="btn btn-ghost btn-block" href="#contact" data-package="Essential">Ask about Essential</a>
+            <a class="btn btn-ghost btn-block" href="#contact">Ask about Essential</a>
           </article>
           <article class="tier tier-featured reveal">
             <p class="tier-name">Professional</p>
@@ -257,7 +257,7 @@
               <li><strong>Live switching</strong></li>
               <li><strong>Overlay graphics</strong></li>
             </ul>
-            <a class="btn btn-block" href="#contact" data-package="Professional">Ask about Professional</a>
+            <a class="btn btn-block" href="#contact">Ask about Professional</a>
           </article>
           <article class="tier reveal">
             <p class="tier-name">Production</p>
@@ -270,7 +270,7 @@
               <li>Live switching</li>
               <li><strong>Custom graphics</strong></li>
             </ul>
-            <a class="btn btn-ghost btn-block" href="#contact" data-package="Production">Ask about Production</a>
+            <a class="btn btn-ghost btn-block" href="#contact">Ask about Production</a>
           </article>
         </div>
         <div class="custom reveal">
@@ -281,7 +281,7 @@
           <ul class="addons" aria-label="Available add-ons">
             <li>Sound systems</li><li>Lighting</li><li>Projectors</li><li>Off-grid events</li><li>Starlink / LTE</li><li>Portable power</li>
           </ul>
-          <a class="btn" href="#contact" data-package="Custom">Build my package</a>
+          <a class="btn" href="#contact">Build my package</a>
         </div>
       </div>
     </section>
@@ -298,35 +298,13 @@
             <li>Serving the greater Chicagoland area</li>
             <li>Registered LLC with general liability insurance</li>
           </ul>
-          <a class="btn btn-light" id="booking-link" href="#" hidden target="_blank" rel="noopener">Pick a time on our calendar</a>
-          <p class="contact-direct" id="contact-direct" hidden>Prefer email? <a id="contact-email-link" href="#"></a></p>
         </div>
-        <form class="contact-form" id="contact-form" novalidate>
-          <div class="field-row">
-            <label>Name<input name="name" autocomplete="name" required></label>
-            <label>Email<input name="email" type="email" autocomplete="email" required></label>
-          </div>
-          <div class="field-row">
-            <label>Organization<input name="organization" autocomplete="organization"></label>
-            <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="Optional"></label>
-          </div>
-          <div class="field-row">
-            <label>Event date<input name="date" type="date"></label>
-            <label>Package
-              <select name="package" id="package-select">
-                <option value="">Not sure yet</option>
-                <option>Essential</option>
-                <option>Professional</option>
-                <option>Production</option>
-                <option>Custom</option>
-              </select>
-            </label>
-          </div>
-          <label>Event type &amp; location<input name="event" placeholder="e.g. Graduation, Lincolnshire IL"></label>
-          <label>Anything else?<textarea name="message" rows="4" placeholder="Number of cameras, streaming platform, audio needs, venue details..."></textarea></label>
-          <button class="btn btn-block" type="submit">Send request</button>
-          <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
-        </form>
+        <!-- Consultation form goes here. To use a Google Form, replace the contents of this div with its
+             embed iframe (Send > <> in Google Forms); docs.google.com is already allowed by the server's CSP. -->
+        <div class="contact-form" id="consultation-form">
+          <p class="placeholder-title">Online requests coming soon</p>
+          <p>We're setting up our consultation request form. Check back shortly.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -349,7 +327,6 @@
     <button class="lb-next" aria-label="Next image">&#8250;</button>
   </dialog>
 
-  <script src="/config.js"></script>
   <script src="/js/main.js" defer></script>
 </body>
 </html>

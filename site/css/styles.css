@@ -181,18 +181,10 @@ h2 { font: 600 clamp(1.75rem, 3.6vw, 2.75rem)/1.12 var(--sans); letter-spacing: 
 .contact-points { list-style: none; padding: 0; margin: 0 0 28px; }
 .contact-points li { padding: 8px 0 8px 28px; position: relative; }
 .contact-points li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 12px; height: 7px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg); }
-.contact-direct { margin-top: 18px; color: rgba(255,255,255,.85); }
 .contact-form { background: var(--bg); color: var(--text); border-radius: 18px; padding: clamp(24px, 4vw, 40px); display: grid; gap: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.3); }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.contact-form label { display: grid; gap: 6px; font-size: .85rem; font-weight: 600; color: #c9cfda; }
-.opt { font-weight: 400; color: var(--muted); }
-.contact-form input, .contact-form select, .contact-form textarea { width: 100%; font: 400 1rem/1.4 var(--sans); color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; transition: border-color .2s, box-shadow .2s; color-scheme: dark; }
-.contact-form textarea { resize: vertical; min-height: 110px; }
-.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--accent-hi); box-shadow: 0 0 0 3px rgba(106,113,255,.25); }
-.contact-form [aria-invalid="true"] { border-color: var(--live); }
-.form-note { font-size: .9rem; color: var(--muted); min-height: 1.4em; }
-.form-note.ok { color: #6ee7a8; }
-.form-note.err { color: #ff8a94; }
+.contact-form iframe { width: 100%; min-height: 720px; border: 0; border-radius: 10px; }
+.placeholder-title { font: 800 2rem/1 var(--display); text-transform: uppercase; color: #fff; margin-bottom: 10px; }
+.contact-form p:not(.placeholder-title) { color: var(--muted); }
 
 /* ---------- Footer ---------- */
 .site-footer { padding: 40px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
@@ -235,7 +227,6 @@ h2 { font: 600 clamp(1.75rem, 3.6vw, 2.75rem)/1.12 var(--sans); letter-spacing: 
   .wrap { padding: 0 16px; }
   .brand-word { width: 150px; }
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 150px; gap: 8px; }
-  .field-row { grid-template-columns: 1fr; }
   .hero-actions .btn { flex: 1 1 100%; }
   .eyebrow { font-size: .68rem; letter-spacing: .1em; padding: 8px 12px; }
   .trust { gap: 8px 18px; font-size: .85rem; }

@@ -1,17 +1,13 @@
-name: netinfrasystems
+name: netinfrasystemswebsite
 services:
-  netinfrasystems:
+  netinfrasystemswebsite:
     image: ghcr.io/amurikurthy/netinfrasystemswebsite:latest
-    container_name: netinfrasystems
+    container_name: netinfrasystemswebsite
     restart: unless-stopped
-    environment:
-      - CONTACT_EMAIL=                # shown on the page; form falls back to mailto: here
-      - BOOKING_URL=                  # optional: Calendly / Cal.com link for "Pick a time"
-      - FORM_ENDPOINT=                # optional: Formspree-style JSON endpoint for the form
 
-  netinfrasystems-newt:
+  netinfrasystemswebsite-newt:
     image: fosrl/newt
-    container_name: netinfrasystems-newt
+    container_name: netinfrasystemswebsite-newt
     restart: always
     environment:
       - PANGOLIN_ENDPOINT=https://pangolin.borderleaf.com
@@ -22,4 +18,4 @@ services:
 
 networks:
   default:
-    name: netinfrasystems
+    name: netinfrasystemswebsite

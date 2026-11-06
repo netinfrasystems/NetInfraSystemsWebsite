@@ -1,29 +1,25 @@
 # netinfrasystems.com
 
-Static rebuild of the Net Infra Systems site, served by nginx in a Docker container.
+The Net Infra Systems website: a static site served by nginx in a Docker container.
 
 ![Desktop preview](docs/preview-desktop.png)
 
 ## Deploy with Docker Compose
 
 The site is published behind Pangolin through a Newt tunnel, so no ports are exposed on the host.
-Save this as `docker-compose.yml` (it's also in the repo root):
+`docker-compose.yml` in the repo root:
 
 ```yaml
-name: netinfrasystems
+name: netinfrasystemswebsite
 services:
-  netinfrasystems:
+  netinfrasystemswebsite:
     image: ghcr.io/amurikurthy/netinfrasystemswebsite:latest
-    container_name: netinfrasystems
+    container_name: netinfrasystemswebsite
     restart: unless-stopped
-    environment:
-      - CONTACT_EMAIL=                # shown on the page; form falls back to mailto: here
-      - BOOKING_URL=                  # optional: Calendly / Cal.com link for "Pick a time"
-      - FORM_ENDPOINT=                # optional: Formspree-style JSON endpoint for the form
 
-  netinfrasystems-newt:
+  netinfrasystemswebsite-newt:
     image: fosrl/newt
-    container_name: netinfrasystems-newt
+    container_name: netinfrasystemswebsite-newt
     restart: always
     environment:
       - PANGOLIN_ENDPOINT=https://pangolin.borderleaf.com
@@ -34,19 +30,18 @@ services:
 
 networks:
   default:
-    name: netinfrasystems
+    name: netinfrasystemswebsite
 ```
 
 1. Fill in `NEWT_ID` and `NEWT_SECRET` from the site you create in Pangolin.
-2. Set at least one of `CONTACT_EMAIL`, `BOOKING_URL` or `FORM_ENDPOINT` (see below).
-3. Start it:
+2. Start it:
 
    ```bash
    docker compose up -d
    ```
 
-4. In Pangolin, add a resource for `netinfrasystems.com` (and `www`) pointing at
-   `http://netinfrasystems:80` on this site. Pangolin handles HTTPS.
+3. In Pangolin, add a resource for `netinfrasystems.com` (and `www`) pointing at
+   `http://netinfrasystemswebsite:80` on this site. Pangolin handles HTTPS.
 
 Update to the latest build:
 
@@ -54,7 +49,7 @@ Update to the latest build:
 docker compose pull && docker compose up -d
 ```
 
-There's no `volumes:` entry because the site is stateless: everything lives in the image.
+The site is stateless, so there are no volumes to back up.
 
 ## Image
 
@@ -68,23 +63,18 @@ To build locally instead:
 docker build -t ghcr.io/amurikurthy/netinfrasystemswebsite:latest .
 ```
 
-## Settings (environment variables, no rebuild needed)
+## Contact form
 
-| Variable        | What it does |
-|-----------------|--------------|
-| `CONTACT_EMAIL` | Shows "Prefer email?" on the page. If there's no `FORM_ENDPOINT`, the form opens the visitor's email app addressed here. |
-| `BOOKING_URL`   | Shows a "Pick a time on our calendar" button (Calendly, Cal.com, Google appointment schedule, ...). |
-| `FORM_ENDPOINT` | The form POSTs JSON here (Formspree, Basin, Getform or your own API). Its origin is added to the CSP automatically. |
-
-If none are set, the form tells visitors that online requests aren't set up yet, so set at least one before going live.
+The contact section currently shows an "Online requests coming soon" placeholder. To add a Google Form,
+replace the contents of `<div id="consultation-form">` in `site/index.html` with the form's embed iframe
+(in Google Forms: **Send > `<>`**). The server's Content-Security-Policy already allows `docs.google.com`.
 
 ## Layout
 
 ```
-site/            HTML, CSS, JS, fonts (self-hosted), images (WebP)
-docker/          nginx template + startup script that writes /config.js
-Dockerfile       nginx:1.28-alpine; healthcheck on /healthz
+site/              HTML, CSS, JS, fonts (self-hosted), images (WebP)
+docker/nginx.conf  nginx server config: gzip, caching, security headers, /healthz
+Dockerfile         nginx:1.28-alpine
 ```
 
-The server sets gzip, cache headers, and a strict Content-Security-Policy. YouTube videos load from
-youtube-nocookie.com only after a visitor clicks play.
+YouTube videos load from youtube-nocookie.com only after a visitor clicks play.
