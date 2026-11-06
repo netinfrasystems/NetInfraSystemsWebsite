@@ -1,0 +1,27 @@
+#!/bin/sh
+# Sourced by the nginx image entrypoint before templates are rendered.
+# Writes /config.js from environment variables so the same image can be
+# reconfigured without rebuilding.
+set -eu
+
+js_escape() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/</\\u003c/g'; }
+
+BOOKING_URL="${BOOKING_URL:-}"
+CONTACT_EMAIL="${CONTACT_EMAIL:-}"
+FORM_ENDPOINT="${FORM_ENDPOINT:-}"
+
+cat > /usr/share/nginx/html/config.js <<JS
+window.SITE_CONFIG = {
+  bookingUrl: "$(js_escape "$BOOKING_URL")",
+  contactEmail: "$(js_escape "$CONTACT_EMAIL")",
+  formEndpoint: "$(js_escape "$FORM_ENDPOINT")"
+};
+JS
+
+# Allow the browser to POST to the form endpoint's origin under the CSP.
+FORM_ORIGIN=""
+if [ -n "$FORM_ENDPOINT" ]; then
+  FORM_ORIGIN="$(printf '%s' "$FORM_ENDPOINT" | sed -n 's#^\(https\?://[^/]*\).*#\1#p')"
+fi
+export FORM_ORIGIN
+echo "site-config: booking=${BOOKING_URL:-<none>} email=${CONTACT_EMAIL:-<none>} form=${FORM_ENDPOINT:-<none>}"

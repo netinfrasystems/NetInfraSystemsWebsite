@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    image: netinfrasystems-site:latest
+    container_name: netinfrasystems-site
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      # Optional: link to an online scheduler (Calendly, Cal.com, Google appointment page...)
+      BOOKING_URL: ""
+      # Optional: shown on the page and used by the form as a mailto: fallback
+      CONTACT_EMAIL: ""
+      # Optional: a form service URL that accepts JSON POSTs (e.g. Formspree, Basin, your own API)
+      FORM_ENDPOINT: ""
