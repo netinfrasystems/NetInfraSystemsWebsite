@@ -157,10 +157,12 @@ Things to know:
   content is blocked".
 - **Styling:** the form can't be restyled from this site (browsers block styling another site's page). Its theme
   colour is set in Google Forms to `#434BE7`, the site's indigo.
-- **After submitting:** `site/js/main.js` notices when the form frame loads a new page after the visitor has
-  used it. It then scrolls the form card into view and shrinks the frame (`.form-embed.submitted`, 560px) to fit
-  Google's short confirmation; "Submit another response" restores the full height. It can't see inside the frame,
-  so it relies on that load signal, and loads before anyone touches the form are ignored.
+- **After submitting:** `site/js/main.js` replaces the form with the site's own "Request received" card and
+  scrolls it into view; "Submit another request" brings back a fresh form. It can't see inside Google's frame, so
+  it relies on the frame loading a new page after the visitor has used the form. That's safe because every link
+  in Google's form opens in a new tab, so only a submission reloads the frame. Loads before anyone touches the
+  form are ignored. Google's own confirmation message (Settings → Presentation) only shows if the form is opened
+  in a new tab.
 - **Fallback:** an "Open it in a new tab" link under the form covers browsers that block embedded content.
 
 ## Editing the site

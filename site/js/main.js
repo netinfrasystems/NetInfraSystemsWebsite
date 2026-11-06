@@ -70,21 +70,33 @@
     });
   }
 
-  // Google Form: the form is cross-origin, so we can't see inside it, but the frame fires "load" each
-  // time Google shows a new page. After someone has used the form, a load means they submitted (or hit
-  // "Submit another response"): bring the card into view and size the frame for the short confirmation.
+  // Google Form. The form is cross-origin, so we can't see inside it, but the frame fires "load" each time
+  // Google shows a new page. Every link in Google's form opens in a new tab and only the form itself submits
+  // inside the frame, so once someone has used the form, the next load means it was submitted. We then
+  // replace the frame with our own confirmation: no leftover frame to trap touch-scrolling, no empty space.
   var formCard = $("#consultation-form");
   var formFrame = formCard && $("iframe", formCard);
   if (formFrame) {
-    var usedForm = false, userLoads = 0;
+    var formSrc = formFrame.src, usedForm = false;
+    var done = $(".form-done", formCard);
     // Clicking into a cross-origin frame blurs this window and makes the frame the active element.
     window.addEventListener("blur", function () {
       setTimeout(function () { if (document.activeElement === formFrame) usedForm = true; }, 0);
     });
     formFrame.addEventListener("load", function () {
-      if (!usedForm) return; // initial load, or Google's own redirects before anyone touched the form
-      userLoads++;
-      formCard.classList.toggle("submitted", userLoads % 2 === 1); // confirmation, then form again, ...
+      if (!usedForm) return; // first load, or Google's own redirects before anyone touched the form
+      usedForm = false;
+      formCard.classList.add("done");
+      formFrame.hidden = true;
+      done.hidden = false;
+      $(".form-done-title", done).focus({ preventScroll: true }); // pull focus out of the hidden frame
+      formCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    $("#form-again", done).addEventListener("click", function () {
+      formCard.classList.remove("done");
+      done.hidden = true;
+      formFrame.hidden = false;
+      formFrame.src = formSrc; // fresh, empty form; its load is ignored until it's used again
       formCard.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
