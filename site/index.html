@@ -31,13 +31,18 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Net Infra Systems LLC",
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "name": "Net Infra Systems",
     "url": "https://netinfrasystems.com/",
     "logo": "https://netinfrasystems.com/img/logo-mark.png",
     "image": "https://netinfrasystems.com/img/hero.webp",
-    "description": "Live event broadcast, recording and streaming.",
-    "areaServed": "Greater Chicagoland area"
+    "description": "Live streaming services in Chicago, the North Shore and Lake County, Illinois. Graduation livestreams, switched live and recorded.",
+    "areaServed": [
+      { "@type": "Place", "name": "Chicagoland" },
+      { "@type": "City", "name": "Chicago", "containedInPlace": { "@type": "State", "name": "Illinois" } },
+      { "@type": "Place", "name": "North Shore", "containedInPlace": { "@type": "State", "name": "Illinois" } },
+      { "@type": "AdministrativeArea", "name": "Lake County", "containedInPlace": { "@type": "State", "name": "Illinois" } }
+    ]
   }
   </script>
 </head>
