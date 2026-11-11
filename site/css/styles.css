@@ -97,8 +97,8 @@ h2 { font: 600 clamp(1.75rem, 3.6vw, 2.75rem)/1.12 var(--sans); letter-spacing: 
 
 /* ---------- Intro ---------- */
 .intro { padding-bottom: 0; }
-.statement { font: 500 clamp(1.5rem, 3.2vw, 2.4rem)/1.3 var(--sans); letter-spacing: -.015em; color: #fff; text-wrap: balance; }
-.statement em { font-style: normal; color: var(--accent-hi); }
+h2.statement { font: 500 clamp(1.5rem, 3.2vw, 2.4rem)/1.3 var(--sans); letter-spacing: -.015em; color: #fff; text-wrap: balance; }
+h2.statement em { font-style: normal; color: var(--accent-hi); }
 
 /* ---------- Services ---------- */
 .intro-head { margin: 0 auto clamp(40px, 6vw, 64px); }
@@ -264,7 +264,7 @@ h2 { font: 600 clamp(1.75rem, 3.6vw, 2.75rem)/1.12 var(--sans); letter-spacing: 
   .ticker { padding: 10px 0; }
   .ticker span { font-size: .9rem; padding: 0 16px; gap: 32px; }
 
-  .statement { font-size: 1.4rem; }
+  h2.statement { font-size: 1.4rem; }
   .services { grid-template-columns: 1fr; gap: 12px; }
   .svc { padding: 22px 20px; display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; }
   .svc-icon { grid-row: span 2; margin-bottom: 0; }
