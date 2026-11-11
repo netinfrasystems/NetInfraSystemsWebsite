@@ -1,0 +1,21 @@
+name: netinfrasystemswebsite
+services:
+  netinfrasystemswebsite:
+    image: ghcr.io/netinfrasystems/netinfrasystemswebsite:latest
+    container_name: netinfrasystemswebsite
+    restart: unless-stopped
+
+  netinfrasystemswebsite-newt:
+    image: fosrl/newt
+    container_name: netinfrasystemswebsite-newt
+    restart: always
+    environment:
+      - PANGOLIN_ENDPOINT=https://your-pangolin-server.example.com
+      - NEWT_ID=
+      - NEWT_SECRET=
+    extra_hosts:
+      - "docker-host:host-gateway"
+
+networks:
+  default:
+    name: netinfrasystemswebsite
