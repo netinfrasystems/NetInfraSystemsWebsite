@@ -133,7 +133,7 @@ h2.statement em { font-style: normal; color: var(--accent-hi); }
 .stack strong { flex-basis: 100%; font-size: .9rem; margin-top: 4px; }
 
 /* ---------- Production cards ---------- */
-.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
 .card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .3s, border-color .3s; }
 .card:hover { transform: translateY(-4px); border-color: #364056; }
 .video { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; background: #000; cursor: pointer; overflow: hidden; }
